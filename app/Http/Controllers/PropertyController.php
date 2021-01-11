@@ -14,6 +14,18 @@ class PropertyController extends Controller
         return view('property/index')->with('properties', $properties);
     }
 
+    public function show($id) {
+        //pesquisa no BD usando o id, e caso tenha alimenta a visão
+        $property = DB::select("SELECT * FROM properties WHERE id = ?", [$id]);
+
+        if (!empty($property)) {
+            // chama a view
+            return view('property/show')->with('property', $property);
+        } else {
+            return redirect()->action([PropertyController::class, 'index']);
+        }
+    }
+
     public function create() {
         return view('property/create');
     }
