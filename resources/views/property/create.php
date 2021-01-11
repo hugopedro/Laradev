@@ -5,9 +5,6 @@
     <?=
     csrf_field();
     ?>
-    <label for="id">ID do imóvel</label>
-    <input type="text" name="id" id="id">
-    <br/>
     <label for="title">Título do imóvel</label>
     <input type="text" name="title" id="title">
     <br/>
