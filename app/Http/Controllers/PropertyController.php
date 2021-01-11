@@ -56,6 +56,39 @@ class PropertyController extends Controller
         return redirect()->action([PropertyController::class, 'index']);
     }
 
+    public function edit($name)
+    {
+        //pesquisa no BD usando o id, e caso tenha alimenta a visão
+        $property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+
+        if (!empty($property)) {
+            // chama a view
+            return view('property/edit')->with('property', $property);
+        } else {
+            return redirect()->action([PropertyController::class, 'index']);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $propertySlug = $this->setName($request->title);
+
+        $property = [
+            $request->title,
+            $propertySlug,
+            $request->description,
+            $request->rental_price,
+            $request->sale_price,
+            $id
+        ];
+
+        DB::update("UPDATE properties SET title = ?, name = ?, description = ?,
+                      rental_price = ?, sale_price = ?
+        WHERE id = ?", $property);
+
+        return redirect()->action([PropertyController::class, 'index']);
+    }
+
     // é preciso criar um método pra caso mude o nome do imovel, fazer a verificação novamente
 
     private function setName($title) {

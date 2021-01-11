@@ -6,6 +6,7 @@
 /.vscode
 .env
 .env.backup
+.idea/
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
