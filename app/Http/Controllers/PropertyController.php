@@ -4,19 +4,23 @@ namespace LaraDev\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use LaraDev\Models\Property;
 
 class PropertyController extends Controller
 {
     public function index() {
 
-        $properties = DB::select("SELECT * FROM properties");
+        //$properties = DB::select("SELECT * FROM properties") equivale a linha abaixo;
+        $properties = Property::all();
 
         return view('property/index')->with('properties', $properties);
     }
 
     public function show($name) {
         //pesquisa no BD usando o id, e caso tenha alimenta a visão
-        $property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //$property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //EQUIVALE A LINHA DE BAIXO!
+        $property = Property::where('name', $name)->get();
 
         if (!empty($property)) {
             // chama a view
@@ -59,7 +63,9 @@ class PropertyController extends Controller
     public function edit($name)
     {
         //pesquisa no BD usando o id, e caso tenha alimenta a visão
-        $property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //$property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //EQUIVALE A LINHA DE BAIXO!
+        $property = Property::where('name', $name)->get();
 
         if (!empty($property)) {
             // chama a view
@@ -90,7 +96,9 @@ class PropertyController extends Controller
     }
 
     public function destroy($name) {
-        $property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //$property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+        //EQUIVALE A LINHA ABAIXO
+        $property = Property::where('name', $name)->get();
 
         if(!empty($property)) { //verifica se teve algum retorno
             DB::delete("DELETE FROM properties WHERE name = ?", [$name]);
@@ -108,7 +116,9 @@ class PropertyController extends Controller
         // minusculo, cedilhas etc. é usada a função slug para isso.
         $propertySlug = str_slug($title);
         //verifica se já tem outros registros com o mesmo valor, pois não vai rodar se tiver duplicado
-        $properties = DB::select("SELECT * FROM properties");
+        //$properties = DB::select("SELECT * FROM properties");
+        //EQUIVALE A LINHA ABAIXO
+        $property = Property::all();
         $t = 0;
         foreach($properties as $property) {
             // se o titulo for totalmente igual...
