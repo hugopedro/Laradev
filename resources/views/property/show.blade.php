@@ -1,5 +1,6 @@
 @extends('property.master')
 @section('content')
+<div class="container my-3">
 
 <h1>Página Single</h1>
 
@@ -19,5 +20,7 @@
         }
     }
 ?>
+
+</div>
 
 @endsection
