@@ -45,17 +45,29 @@ class PropertyController extends Controller
         os nomes ficam duplicados, então esse processo vai passar duas vzes dentro do bloco foreach,
         ao passar alimenta-se a variável $t++ para concatenar o nome do título com um número contador,
         daí em vez de ficar Nome Nome fica Nome Nome 1, dái evita dupes. */
-
-        $property = [
+        /*
+        //$property = [
             $request->title,
             $propertySlug,
             $request->description,
             $request->rental_price,
             $request->sale_price
-        ];
+        //];
 
         DB::insert("INSERT INTO properties (title, name, description, rental_price, sale_price) VALUES
                    (?, ?, ?, ?, ?)", $property);
+
+        EQUIVALE AO CÓDIGO ABAIXO: */
+
+            $property = [
+            'title' => $request->title,
+            'name' => $propertySlug,
+            'description' => $request->description,
+            'rental_price' => $request->rental_price,
+            'sale_price' => $request->sale_price
+        ];
+
+        Property::create($property);
 
         return redirect()->action([PropertyController::class, 'index']);
     }
