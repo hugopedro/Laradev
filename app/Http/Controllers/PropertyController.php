@@ -79,18 +79,29 @@ class PropertyController extends Controller
     {
         $propertySlug = $this->setName($request->title);
 
-        $property = [
+        /* //$property = [
             $request->title,
             $propertySlug,
             $request->description,
             $request->rental_price,
             $request->sale_price,
             $id
-        ];
+        //];
 
         DB::update("UPDATE properties SET title = ?, name = ?, description = ?,
                       rental_price = ?, sale_price = ?
         WHERE id = ?", $property);
+
+        EQUIVALE AO CODIGO ABAIXO UTILIZANDO O FRAMEWORK: */
+
+        $property = Property::find($id);
+        $property->title = $request->title;
+        $property->name = $propertySlug;
+        $property->description = $request->description;
+        $property->rental_price = $request->rental_price;
+        $property->sale_price = $request->sale_price;
+
+        $property->save();
 
         return redirect()->action([PropertyController::class, 'index']);
     }
@@ -118,7 +129,7 @@ class PropertyController extends Controller
         //verifica se já tem outros registros com o mesmo valor, pois não vai rodar se tiver duplicado
         //$properties = DB::select("SELECT * FROM properties");
         //EQUIVALE A LINHA ABAIXO
-        $property = Property::all();
+        $properties = Property::all();
         $t = 0;
         foreach($properties as $property) {
             // se o titulo for totalmente igual...
