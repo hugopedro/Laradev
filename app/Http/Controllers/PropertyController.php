@@ -89,6 +89,18 @@ class PropertyController extends Controller
         return redirect()->action([PropertyController::class, 'index']);
     }
 
+    public function destroy($name) {
+        $property = DB::select("SELECT * FROM properties WHERE name = ?", [$name]);
+
+        if(!empty($property)) { //verifica se teve algum retorno
+            DB::delete("DELETE FROM properties WHERE name = ?", [$name]);
+        }
+
+        //redireciona novamente para a listagem
+
+        return redirect()->action([PropertyController::class, 'index']);
+    }
+
     // é preciso criar um método pra caso mude o nome do imovel, fazer a verificação novamente
 
     private function setName($title) {
