@@ -1,3 +1,6 @@
+@extends('property.master')
+@section('content')
+
 <h1>Formulário de Cadastro:: Imóveis</h1>
 
 <form action="<?= url("/imoveis/store"); ?>" method="post">
@@ -19,3 +22,5 @@
     <br/>
     <button type="submit">Cadastrar imóvel</button>
 </form>
+
+@endsection
